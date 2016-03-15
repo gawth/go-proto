@@ -5,6 +5,7 @@ import (
 )
 
 var host = "http://10.211.55.3:8888/"
+var host2 = "http://10.211.55.3:8899/"
 
 func BenchmarkTLRGJsonEndToEnd(b *testing.B) {
 	for n := 0; n < b.N; n++ {
@@ -63,5 +64,17 @@ func BenchmarkTLRGPBProcessing(b *testing.B) {
 	b.ResetTimer()
 	for n := 0; n < b.N; n++ {
 		processProto(data)
+	}
+}
+
+// Different server tested here
+func BenchmarkTLRG2JsonEndpoint(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		hitUrl("application/json", host2+"testjson")
+	}
+}
+func BenchmarkTLRG2PBEndpoint(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		hitUrl("application/x-protobuf", host2+"testprotobuf")
 	}
 }
